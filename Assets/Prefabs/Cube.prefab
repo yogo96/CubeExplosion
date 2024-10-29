@@ -127,9 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60077618cf274c13b690abc003a3a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cubePrefab: {fileID: 3331327754999287084}
-  _spawnCountMin: 2
-  _spawnCountMax: 6
-  _explosionForce: 10
-  _explosionRadius: 5
-  DivisionChance: 100
+  _spawner: {fileID: 0}
+  _exploder: {fileID: 0}
+  _divisionChance: 100
