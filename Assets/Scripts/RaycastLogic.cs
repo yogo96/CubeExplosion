@@ -17,7 +17,7 @@ public class RaycastLogic : MonoBehaviour
         {
             if (hitInfo.collider.TryGetComponent<Cube>(out Cube cube))
             {
-                cube.Explode();
+                cube.Divide();
             }
         }
     }

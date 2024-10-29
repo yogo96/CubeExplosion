@@ -28,7 +28,7 @@ public class Cube : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
     }
 
-    public void Explode()
+    public void Divide()
     {
         bool isDivisionSuccess = Random.Range(0, _maxPercent + 1) <= _divisionChance;
 
