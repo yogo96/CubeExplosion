@@ -8,9 +8,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _spawnCountMin = 2;
     [SerializeField] private int _spawnCountMax = 6;
 
-    private int _factor = 2;
-
-    public List<Cube> CreateCubesWith(Vector3 position, Vector3 scale, int divisionChance)
+    public void SpawnCubesFrom(Cube cube)
     {
         List<Cube> cubeList = new List<Cube>();
 
@@ -18,17 +16,17 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < creatingCubeCount; i++)
         {
-            Cube createdCube = CreateCube(position, scale, divisionChance);
+            Cube createdCube = CreateCube(cube);
             cubeList.Add(createdCube);
         }
 
-        return cubeList;
+        _exploder.ExplodeCubes(cubeList);
     }
     
-    private Cube CreateCube(Vector3 position, Vector3 scale, int divisionChance)
+    private Cube CreateCube(Cube cube)
     {
-        Cube newCube = Instantiate(_cubePrefab, position, Quaternion.identity);
-        newCube.Init(this, _exploder, scale, divisionChance);
+        Cube newCube = Instantiate(_cubePrefab, cube.transform.position, Quaternion.identity);
+        newCube.Init(this, cube.transform.localScale, cube.DivisionChance);
         return newCube;
     }
 }

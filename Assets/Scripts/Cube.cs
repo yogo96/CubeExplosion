@@ -8,12 +8,12 @@ public class Cube : MonoBehaviour
 {
     [SerializeField] private int _divisionChance = 100;
     [SerializeField] private Spawner _spawner;
-    [SerializeField] private Exploder _exploder;
-    
+
     private int _maxPercent = 100;
     private int _factor = 2;
 
     public Rigidbody Rigidbody { get; private set; }
+    public int DivisionChance => _divisionChance;
 
     private void Awake()
     {
@@ -27,18 +27,15 @@ public class Cube : MonoBehaviour
 
         if (isDivisionSuccess == true)
         {
-            List<Cube> cubeToExplosion = _spawner.CreateCubesWith(transform.position, transform.localScale, _divisionChance);
-
-            _exploder.ExplodeCubes(cubeToExplosion);
+            _spawner.SpawnCubesFrom(this);
         }
 
         Destroy(gameObject);
     }
 
-    public void Init(Spawner spawner, Exploder exploder, Vector3 previousScale, int previousDivisionChance)
+    public void Init(Spawner spawner, Vector3 previousScale, int previousDivisionChance)
     {
         _spawner = spawner;
-        _exploder = exploder;
         transform.localScale = new Vector3(
             previousScale.x / _factor,
             previousScale.y / _factor,
@@ -46,5 +43,4 @@ public class Cube : MonoBehaviour
         );
         _divisionChance = previousDivisionChance / _factor;
     }
-
 }
