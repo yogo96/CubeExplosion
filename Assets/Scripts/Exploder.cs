@@ -29,7 +29,7 @@ public class Exploder : MonoBehaviour
                 float explosionRadius = _explosionRadius / Mathf.Max(scale.x, 0.1f);
                 explosionForce = explosionForce / Mathf.Max(scale.x, 0.1f);
 
-                cube.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, position, explosionRadius);
+                cube.Rigidbody.AddExplosionForce(explosionForce, position, explosionRadius);
             }
         }
     }
