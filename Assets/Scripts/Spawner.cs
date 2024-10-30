@@ -4,12 +4,13 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
+    [SerializeField] private Exploder _exploder;
     [SerializeField] private int _spawnCountMin = 2;
     [SerializeField] private int _spawnCountMax = 6;
 
     private int _factor = 2;
 
-    public List<Cube> CreateCubesFrom(Vector3 position, Vector3 scale, int divisionChance)
+    public List<Cube> CreateCubesWith(Vector3 position, Vector3 scale, int divisionChance)
     {
         List<Cube> cubeList = new List<Cube>();
 
@@ -27,13 +28,7 @@ public class Spawner : MonoBehaviour
     private Cube CreateCube(Vector3 position, Vector3 scale, int divisionChance)
     {
         Cube newCube = Instantiate(_cubePrefab, position, Quaternion.identity);
-        newCube.transform.localScale = new Vector3(
-            scale.x / _factor,
-            scale.y / _factor,
-            scale.z / _factor
-        );
-        newCube.DivisionChance = divisionChance / _factor;
-
+        newCube.Init(this, _exploder, scale, divisionChance);
         return newCube;
     }
 }

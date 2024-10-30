@@ -499,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 3331327754999287084, guid: 9f22df3227a7a4a17b18983a18277bd0, type: 3}
+  _exploder: {fileID: 963194230}
   _spawnCountMin: 2
   _spawnCountMax: 6
 --- !u!1 &991105372

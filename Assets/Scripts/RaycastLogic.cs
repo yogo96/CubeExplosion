@@ -11,9 +11,9 @@ public class RaycastLogic : MonoBehaviour
             return;
         }
 
-        Ray _ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(transform.position, _ray.direction, out RaycastHit hitInfo))
+        if (Physics.Raycast(transform.position, ray.direction, out RaycastHit hitInfo))
         {
             if (hitInfo.collider.TryGetComponent<Cube>(out Cube cube))
             {

@@ -3,29 +3,22 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(MeshRenderer))]
 public class Cube : MonoBehaviour
 {
     [SerializeField] private int _divisionChance = 100;
-
-    private Spawner _spawner;
-    private Exploder _exploder;
-    private Rigidbody _rb;
-    private int _maxPercent = 100;
-
-    public int DivisionChance
-    {
-        get { return _divisionChance; }
-        set { _divisionChance = value; }
-    }
+    [SerializeField] private Spawner _spawner;
+    [SerializeField] private Exploder _exploder;
     
-    public Rigidbody Rigidbody => _rb;
+    private int _maxPercent = 100;
+    private int _factor = 2;
+
+    public Rigidbody Rigidbody { get; private set; }
 
     private void Awake()
     {
-        _spawner = FindObjectOfType<Spawner>();
-        _exploder = FindObjectOfType<Exploder>();
-        _rb = gameObject.GetComponent<Rigidbody>();
-        gameObject.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
+        Rigidbody = GetComponent<Rigidbody>();
+        GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
     }
 
     public void Divide()
@@ -34,12 +27,24 @@ public class Cube : MonoBehaviour
 
         if (isDivisionSuccess == true)
         {
-            List<Cube> cubeToExplosion = _spawner.CreateCubesFrom(transform.position, transform.localScale, _divisionChance);
+            List<Cube> cubeToExplosion = _spawner.CreateCubesWith(transform.position, transform.localScale, _divisionChance);
 
             _exploder.ExplodeCubes(cubeToExplosion);
         }
 
         Destroy(gameObject);
+    }
+
+    public void Init(Spawner spawner, Exploder exploder, Vector3 previousScale, int previousDivisionChance)
+    {
+        _spawner = spawner;
+        _exploder = exploder;
+        transform.localScale = new Vector3(
+            previousScale.x / _factor,
+            previousScale.y / _factor,
+            previousScale.z / _factor
+        );
+        _divisionChance = previousDivisionChance / _factor;
     }
 
 }
