@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _spawnCountMin = 2;
     [SerializeField] private int _spawnCountMax = 6;
 
-    public void SpawnCubesFrom(Cube cube)
+    public List<Cube> CreateCubesFrom(Cube cube)
     {
         List<Cube> cubeList = new List<Cube>();
 
@@ -20,13 +20,13 @@ public class Spawner : MonoBehaviour
             cubeList.Add(createdCube);
         }
 
-        _exploder.ExplodeCubes(cubeList);
+        return cubeList;
     }
     
     private Cube CreateCube(Cube cube)
     {
         Cube newCube = Instantiate(_cubePrefab, cube.transform.position, Quaternion.identity);
-        newCube.Init(this, cube.transform.localScale, cube.DivisionChance);
+        newCube.Init(this,_exploder, cube.transform.localScale, cube.DivisionChance);
         return newCube;
     }
 }

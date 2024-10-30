@@ -13,4 +13,24 @@ public class Exploder : MonoBehaviour
             cube.Rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
         }
     }
+    
+    public void ExplodeAround(Vector3 position, Vector3 scale)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, _explosionRadius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.TryGetComponent<Cube>(out Cube cube))
+            {
+                Vector3 direction = position - cube.transform.position;
+                float distance = direction.magnitude;
+
+                float explosionForce = _explosionForce / Mathf.Max(distance, 0.1f);
+                float explosionRadius = _explosionRadius / Mathf.Max(scale.x, 0.1f);
+                explosionForce = explosionForce / Mathf.Max(scale.x, 0.1f);
+
+                cube.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, position, explosionRadius);
+            }
+        }
+    }
 }
